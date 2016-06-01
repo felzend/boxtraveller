@@ -10,8 +10,6 @@ coords_y = open("Coordenadas - Eixo Y.txt", 'r').readlines()
 for a in range(0, 32): #len(coords_x)
     cidades.append( [int(coords_x[a]), int(coords_y[a])] )
     
-
-
 def getDist(p1, p2): # Distância entre 2 pontos
     if not isinstance(p1, list) or not isinstance(p2, list):
         print("Insira uma lista com dois pontos (X, Y).")
@@ -245,7 +243,8 @@ for a in range(0, vezes):
             distances.append(fitness_result)
             inverted_distances.append(1 / fitness_result)
 
-    print(" ------- > Menor Distancia: ", float(min(distances)), "m." )
+    print("Distancias  --> ", distances)
+    print(" ------- > Menor Distancia: ", float(min(distances)), "m." )    
     menores_distancias.append(float(min(distances)))
 
     for a in range(0, len(inverted_distances)):
