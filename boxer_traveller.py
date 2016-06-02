@@ -116,8 +116,8 @@ def roletar(roleta, quantidade):
                 gpopulation += 1                
                       
         population.append(gpopulation)
-        print(population)
-    print("roletado: ", population, "\n")
+        #print(population)
+    #print("roletado: ", population, "\n")
     return population
 
 def crossover(pares, input_number): # Function de Crossover
@@ -165,7 +165,7 @@ def crossover(pares, input_number): # Function de Crossover
             lp = []
             op = []            
             
-    #print("\nPontos de Corte: ", cut_points, "(INDEXS)")
+    print("\nPontos de Corte: ", cut_points, "(INDEXS)")
 
     a = 0
     
@@ -180,7 +180,6 @@ def crossover(pares, input_number): # Function de Crossover
         a += 2
     return cut_pares          
             
-
 def mutation(pares): # Function para Mutação
     mutation = 0.1
     rand = 0    
@@ -189,6 +188,7 @@ def mutation(pares): # Function para Mutação
         for b in range(0, len(pares[a])): # cada uma das cidades do pares
             rand = random.random()
             if rand <= mutation:
+                print("Houve mutação no Par ", a)
                 pos_1 = random.randint(0, len(cidades)-1)
                 while True:
                     pos_2 = random.randint(0, len(cidades)-1)
@@ -198,8 +198,7 @@ def mutation(pares): # Function para Mutação
                         aux = pares[a][pos_1]
                         pares[a][pos_1] = pares[a][pos_2]
                         pares[a][pos_2] = aux                        
-                        break
-                              
+                        break                              
 
     return pares
 
@@ -226,7 +225,9 @@ def generateCities(): # Function para gerar individuos.
 
 # 1) Calcula-se o Fitness (soma de todas as distâncias das cidades que compõe um indivíduo), EX: Distância de A -> B / B -> C / C -> D.....
 # 2) Calcula-se o percentual de cada indivíduo para a mutação.
-# 3) Gira-se a roleta para
+# 3) Gira-se a roleta para sortear os INDIVIDUOS
+# 4) Faz-se o CROSSOVER a partir dos individuos anteriormente selecionados para gerar os pares através de pontos de corte.
+# 5) Faz-se a MUTATION 
 
 population = []
 distances = []
@@ -246,8 +247,10 @@ for a in range(0, input_number): # Gera os N indivíduos iniciais
     population.append(gpopulation) # Adiciona a lista de Cidades sorteadas à Lista de Populações!                             
 
 for a in range(0, vezes):
-
+    
     if a == 0: # O Fitness é realizado em cada indivíduo.
+        for a in range(0, len(population)):
+            print(population[a])
         for b in range(0, len(population)):
             fitness_result = fitness(population[b]) # Soma das distâncias de todos os indivíduos.
             distances.append(fitness_result) # Adiciona a distância entre todas as Cidades desta população à Lista de Distâncias            
@@ -267,20 +270,20 @@ for a in range(0, vezes):
 
     rolled_population = roletar(roleta, input_number)
     pares = generatePares(rolled_population, int(input_number/2))
-    print("Pares: ",pares, "\n")
+    #print("Pares: ",pares, "\n")    
     
-
     print("--------------------------------------------------------------------------------")
     pares = mutation(crossover(pares, input_number))
     for a in range(0, len(pares)):
         print(pares[a])
     gpopulation = []
+    
     population = []
 
     for a in range(0, len(pares)):    
         population.append(pares[a])
-    
-    
+        
+
     fitness_result = []
     #distances = []
     roleta = []
